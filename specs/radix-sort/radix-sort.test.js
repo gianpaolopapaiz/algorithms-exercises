@@ -50,6 +50,43 @@ function radixSort(array) {
   return currentArray
 }
 
+// const longestNumber = (array) => {
+//   let size = 0
+//   for (i = 0; i < array.length; i++) {
+//     let numberSize = array[i].toString().length
+//     if (numberSize > size){
+//       size = numberSize
+//     } 
+//   }
+//   return size
+// }
+
+// function radixSort(array) {
+//   const iterationSize = longestNumber(array);
+//   const arraySize = array.length;
+//   let buckets = [[], [], [], [], [], [], [], [], [], []]
+//   let sortedArray = array
+//   for (let i = 0; i < iterationSize; i++) {
+//     for (let j = 0; j < arraySize; j++) {
+//       const currentNumber = sortedArray[j]
+//       const charCount = currentNumber.toString().length
+//       const index = charCount - 1 - i
+//       let bucketIndex = 0;
+//       if (index >= 0){
+//         bucketIndex = parseInt(currentNumber.toString()[index])
+//       }
+//       buckets[bucketIndex].push(currentNumber)
+//     }
+//     let newArray = []
+//     for (let k = 0; k < buckets.length; k++) {
+//       newArray = newArray.concat(buckets[k])
+//     }
+//     sortedArray = newArray
+//     buckets = [[], [], [], [], [], [], [], [], [], []]
+//   }
+//   return sortedArray
+// }
+
 // unit tests
 // do not modify the below code
 describe("radix sort", function () {
@@ -104,12 +141,12 @@ describe("radix sort", function () {
       123459
     ]);
   });
-  it.skip("should sort 99 random numbers correctly", () => {
+  it("should sort 99 random numbers correctly", () => {
     const fill = 99;
     const nums = new Array(fill)
       .fill()
       .map(() => Math.floor(Math.random() * 500000));
     const ans = radixSort(nums);
-    expect(ans).toEqual(nums.sort());
+    expect(ans).toEqual(nums.sort(function (a, b) {  return a - b;  }));
   });
 });
