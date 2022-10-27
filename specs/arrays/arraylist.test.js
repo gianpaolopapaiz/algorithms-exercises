@@ -21,9 +21,9 @@ class ArrayList {
   // code goes here
   constructor(){
      this.data = {};
-     this.length = 0;
   }
-  get aLength(){
+
+  get length(){
     let index = 0;
     let again = true;
     do {
@@ -33,15 +33,15 @@ class ArrayList {
         again = false;
       }
     } while (again)
-    return index + 1
+    return index
   }
   push(value){
-    let length = this.aLength;
+    let length = this.length;
     this.data[length] = value;
   }
   pop(){
-    let length = this.aLength;
-    deleted = this.data[length - 1];
+    let length = this.length;
+    let deleted = this.data[length - 1];
     delete this.data[length - 1];
     return deleted;
   }
@@ -49,14 +49,14 @@ class ArrayList {
     return this.data[index];
   }
   delete(index){
-    let length = this.aLength;
+    let length = this.length;
     let removed = this.data[index]
-    for (let i = index; i < length -1; i++){
-      let next = this.data(i + 1)
+    for (let i = index; i < length; i++){
+      let next = this.data[i + 1]
       if (next !== undefined){
         this.data[i] = next;
       } else {
-        delete this.data(i + 1);
+        delete this.data[i];
       }
     }
     return removed;
