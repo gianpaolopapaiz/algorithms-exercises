@@ -23,59 +23,76 @@
   you work
 */
 
+const { find } = require("lodash")
+
 class LinkedList {
   constructor() {
-    this.head = null;
-    this.tail = null;
-    this.length = 0;
+    this.head = null
+    this.tail = null
+    this.length = 0
   }
   push(value) {
-    const node = new Node(value);
-    this.length++;
-    if (!this.head) {
-      this.head = node;
+    let node = new Node(value)
+    if (this.length === 0) {
+      this.head = node
     } else {
-      this.tail.next = node;
+      let prevNode = this.head
+      for (let i = 1; i < this.length; i++){
+        prevNode = prevNode.next
+      }
+      prevNode.next = node
+      this.tail = node
     }
-    this.tail = node;
+    this.length++
   }
   pop() {
-    return this.delete(this.length - 1);
-  }
-  _find(index) {
-    if (index >= this.length) return null;
-    let current = this.head;
-    for (let i = 0; i < index; i++) {
-      current = current.next;
+    if (this.length > 0) {
+      let node = this.head;
+      for (let i = 1; i < this.length - 1; i++) {
+        node = node.next;
+      }
+      let removed = node.next
+      node.next = null
+      this.tails = node
+      this.length--
+      return removed.value;
     }
-
-    return current;
   }
   get(index) {
-    const node = this._find(index);
-    if (!node) return void 0;
-    return node.value;
+    let node = this.head
+    for (let i = 0; i < index; i++){
+      node = node.next
+    }
+    return node.value
   }
   delete(index) {
-    if (index === 0) {
-      const head = this.head;
-      if (head) {
-        this.head = head.next;
-      } else {
-        this.head = null;
-        this.tail = null;
+    let node = null
+    let next = null
+    let previous = null
+    if (index > 0) {
+      node = this.head
+      for (let i = 0; i < index; i++){
+        node = node.next
       }
-      this.length--;
-      return head.value;
+      previous = this.head
+      for (let i = 0; i < index - 1; i++){
+        previous = previous.next
+      }
+      node = previous.next
+      next = null;
+      if (node === this.tail){
+        previous.next = null
+      } else {
+        next = node.next
+        previous.next = next
+      }
+    } else {
+      node = this.head
+      next = node.next
+      this.head = next
     }
-
-    const node = this._find(index - 1);
-    const excise = node.next;
-    if (!excise) return null;
-    node.next = excise.next;
-    if (!node.next) this.tail = node.next;
-    this.length--;
-    return excise.value;
+    this.length--
+    return node
   }
 }
 
